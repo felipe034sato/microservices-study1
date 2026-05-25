@@ -58,6 +58,8 @@ public class EmployeeService {
         List<EmployeeResponse> array = new ArrayList<EmployeeResponse>();
         for (Employee employee : employees) {
             EmployeeResponse employeeResponse = modelMapper.map(employee, EmployeeResponse.class);
+            AddressResponse addressResponse = restTemplate.getForObject("http://localhost:8083/address/{id}", AddressResponse.class, employee.getId());
+            employeeResponse.setAddressResponse(addressResponse);
             array.add(employeeResponse);
         }
         return array;
